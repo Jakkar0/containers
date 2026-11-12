@@ -1,8 +1,7 @@
 FROM alpine:3.24
 
-RUN apk add --no-cache unbound
-
-RUN unbound-anchor -v -a /etc/unbound/root.key
+RUN apk add --no-cache unbound \
+    && cp /usr/share/dnssec-root/trusted-key.key /etc/unbound/root.key
 
 COPY unbound.conf /etc/unbound/unbound.conf
 RUN unbound-checkconf /etc/unbound/unbound.conf \
